@@ -19,10 +19,24 @@ const io = new Server(server, {
 
 //someone has connected
 io.on("connection", (socket)=>{
+    //when user gets to the website
     console.log(`User Connected: ${socket.id}`);
     socket.on("disconnect", () =>{
         console.log("User disconnected", socket.id);
     });
+
+    //Check when user joins the room
+    socket.on("roomID", (roomID) => {
+        socket.join(roomID);
+        console.log(`User ${socket.id} connected with room id ${roomID}`);
+
+    });
+
+    //When user sends message to that room
+    socket.on("sendMessage", (data) =>{
+        console.log(data.message);
+        socket.to(data.roomID).emit("receiveMsg", data.message);
+    })
 });
 
 
