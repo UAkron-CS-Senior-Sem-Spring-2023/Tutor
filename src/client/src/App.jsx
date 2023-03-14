@@ -12,8 +12,8 @@ function App() {
 
   function join(){
     if(name !== "" && roomID !== ""){
-      setConnected(true);
       socket.emit("roomID", roomID);
+      setConnected(true);
     }
   }
   return ( !connected ? (<div className ="container">

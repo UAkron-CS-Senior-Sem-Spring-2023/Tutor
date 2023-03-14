@@ -4,7 +4,7 @@ export default function Chat({socket, name, roomID}) {
     //current message
     const [message, setMessage] = useState("");
     
-    async function sendMessage(){
+   const sendMessage = async () =>{
         //We want to send the name, roomID, message and timestamp
         if(message !== ""){
             const now = new Date();
@@ -19,16 +19,17 @@ export default function Chat({socket, name, roomID}) {
             };
             await socket.emit("sendMessage", data);
         }
-    }
+    };
     useEffect(() => {
-        socket.on("recieveMsg", (data) =>{
+        socket.on("receiveMsg", (data) =>{
             console.log(data);
         });
     }, [socket]);
+
     //TODO, EXPORT THIS
     return (<div><div className="top"> <h3> Live Chat </h3></div>
              <div className="message"> 
-              <input type="text" placeholder="Hello!"></input>
+              <input type="text" placeholder="Hello!" onChange={(event)=>setMessage(event.target.value)}></input>
               <button onClick={sendMessage}>Send</button>
               </div>
             <div className="bottom"> </div>

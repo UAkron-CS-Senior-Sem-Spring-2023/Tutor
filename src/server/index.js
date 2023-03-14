@@ -21,6 +21,7 @@ const io = new Server(server, {
 io.on("connection", (socket)=>{
     //when user gets to the website
     console.log(`User Connected: ${socket.id}`);
+    
     socket.on("disconnect", () =>{
         console.log("User disconnected", socket.id);
     });
@@ -34,8 +35,7 @@ io.on("connection", (socket)=>{
 
     //When user sends message to that room
     socket.on("sendMessage", (data) =>{
-        console.log(data.message);
-        socket.to(data.roomID).emit("receiveMsg", data.message);
+        socket.to(data.roomID).emit("receiveMsg", data);
     })
 });
 
